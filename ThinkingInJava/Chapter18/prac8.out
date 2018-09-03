@@ -1,0 +1,57 @@
+1: package parent.prac;
+2: 
+3: import java.io.*;
+4: import java.util.Iterator;
+5: import java.util.LinkedList;
+6: import java.util.regex.Pattern;
+7: 
+8: public class Prac7 {
+9:     public static String file = "prac8.out";
+10: 
+11:     /**
+12:      * 按行读取文本
+13:      *
+14:      * @param fileNames
+15:      * @throws IOException
+16:      */
+17:     public static void readTxt(String[] fileNames) throws IOException {
+18:         BufferedReader in;
+19:         if (fileNames.length == 0) {
+20:             in = new BufferedReader(new FileReader("thisDir/acc1.txt"));
+21:             goRead(in, ".*");
+22:         } else {
+23:             String regex = fileNames[fileNames.length - 1];
+24:             if (!regex.matches("-r:.*")) {
+25:                 regex = ".*";
+26:             } else regex = regex.substring(3, regex.length());
+27:             for (String filename : fileNames) {
+28:                 if (new File(filename).isFile()) {
+29:                     in = new BufferedReader(new FileReader(filename));
+30:                     goRead(in, regex);
+31:                     in.close();
+32:                 } else
+33:                     in = null;
+34:             }
+35:         }
+36:     }
+37: 
+38:     public static void goRead(BufferedReader in, String regex) throws IOException {
+39:         int lineCount = 1;
+40:         //PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(file)));
+41:         //等同于上面这行
+42:         PrintWriter out = new PrintWriter(file);
+43:         String line;
+44:         LinkedList<String> linkedList = new LinkedList<>();
+45:         while ((line = in.readLine()) != null) {
+46:             if (line.matches(regex)) {
+47:                 System.out.println(line);
+48:                 out.println(lineCount++ + ": " + line);
+49:             }
+50:         }
+51:         out.close();
+52:     }
+53: 
+54:     public static void main(String[] args) throws IOException {
+55:         readTxt(args);
+56:     }
+57: }

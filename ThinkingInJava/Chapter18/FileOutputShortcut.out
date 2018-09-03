@@ -1,0 +1,18 @@
+1: package parent.io;
+2: 
+3: import java.io.*;
+4: 
+5: public class FileOutputShortcut {
+6:     static String file = "FileOutputShortcut.out";
+7: 
+8:     public static void main(String[] args) throws IOException {
+9:         BufferedReader in = new BufferedReader(
+10:                 new FileReader("src/parent/io/FileOutputShortcut.java"));
+11:         PrintWriter out = new PrintWriter(file);
+12:         int lineCount = 1;
+13:         String s;
+14:         while ((s = in.readLine()) != null)
+15:             out.println(lineCount++ + ": " + s);
+16:         out.close();
+17:     }
+18: }
